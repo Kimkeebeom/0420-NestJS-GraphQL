@@ -9,18 +9,38 @@ type User {
   picture: String!
 }
 
+type Board {
+  id: ID!
+  title: String!
+  contents: String!
+  user: User!
+}
+
 type Query {
   fetchUser(id: ID!): User!
   fetchLoggedInUser: User!
   fetchUsers(page: Int, perPage: Int): [User!]
   fetchAllUser: User
+  fetchBoard(boardId: ID!): Board!
+  fetchBoards(page: Float, perPage: Float, search: String, startDate: DateTime, endDate: DateTime): [Board!]
+  fetchMyBoards(page: Float, perPage: Float, search: String, startDate: DateTime, endDate: DateTime): [Board!]
+  fetchBoardsILiked(page: Float, perPage: Float): [Board!]
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(password: ID!, updateUserInput: UpdateUserInput!): User!
   deleteUser(password: ID!): Boolean!
+  createBoard(createBoardInput: CreateBoardInput!): Board!
+  updateBoard(boardId: ID!, updateBoardInput: UpdateBoardInput!): Board!
+  deleteBoard(boardId: ID!): Board!
   loginUser(email: String!, password: String!): String!
+  toggleBoardLike(targetId: String!): Boolean!
 }
 
 input CreateUserInput {
@@ -46,4 +66,20 @@ input UpdateUserInput {
 
   """유저 이름"""
   picture: String
+}
+
+input CreateBoardInput {
+  """글 제목"""
+  title: String!
+
+  """글 내용"""
+  contents: String!
+}
+
+input UpdateBoardInput {
+  """글 제목"""
+  title: String
+
+  """글 내용"""
+  contents: String
 }

@@ -4,11 +4,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApolloDriver } from '@nestjs/apollo';
 import { UserModule } from './apis/user/user.module';
 import { AuthModule } from './apis/auth/auth.module';
+import { BoardModule } from './apis/board/board.module';
+import { BoardLikeModule } from './apis/board-like/board-like.module';
 
 @Module({
   imports: [
     UserModule,
+    BoardModule,
     AuthModule,
+    BoardLikeModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: 'src/common/graphql/schema.gql',
@@ -22,7 +26,7 @@ import { AuthModule } from './apis/auth/auth.module';
       username: 'gchoi',
       password: '1234',
       host: '127.0.0.1',
-      entities: [__dirname + '/**/*.entity.*'],
+      entities: [__dirname + '/apis/**/*.entity.*'],
       synchronize: true,
       logging: true,
     }),
