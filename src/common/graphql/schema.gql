@@ -6,17 +6,21 @@ type User {
   id: ID!
   email: String!
   name: String!
+  picture: String!
 }
 
 type Query {
-  userAll: [User!]!
-  user(id: ID!): User!
+  fetchUser(id: ID!): User!
+  fetchLoggedInUser: User!
+  fetchUsers(page: Int, perPage: Int): [User!]
+  fetchAllUser: User
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: ID!): User!
+  updateUser(password: ID!, updateUserInput: UpdateUserInput!): User!
+  deleteUser(password: ID!): Boolean!
+  loginUser(email: String!, password: String!): String!
 }
 
 input CreateUserInput {
@@ -37,7 +41,9 @@ input UpdateUserInput {
   """비밀번호"""
   password: String
 
-  """유저 이름"""
+  """비밀번호"""
   name: String
-  id: String!
+
+  """유저 이름"""
+  picture: String
 }

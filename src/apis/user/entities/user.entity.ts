@@ -26,6 +26,10 @@ export class User {
   @Field(() => String)
   name: string;
 
+  @Column({ type: 'varchar', length: '255', nullable: true })
+  @Field(() => String)
+  picture: string;
+
   @DeleteDateColumn()
   deletdAt: Date;
 
