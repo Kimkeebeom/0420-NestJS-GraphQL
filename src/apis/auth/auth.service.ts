@@ -26,7 +26,7 @@ export class AuthService {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
     res.setHeader(
       'Set-Cookie',
-      `refreshToken=${refreshToken} //path=/; SameSite=None; httpOnly;; `,
+      `refreshToken=${refreshToken} /path=/; SameSite=None; httpOnly; `,
     );
   }
 
@@ -53,5 +53,13 @@ export class AuthService {
     } catch (err: any) {
       PrintErrorMessage('loginUser', err.message);
     }
+  }
+
+  async restoreAccessToken(userId: string) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    if (!user) return new ApolloError('일치하는 유저정보가 없습니다.');
+    return this.getAccessToken(user);
   }
 }

@@ -49,7 +49,7 @@ export class BoardService {
       )
       .andWhere(
         endDate
-          ? `board.createdAt < TO_DATE(,'YYYYMMDD') + integer'1'`
+          ? `board.createdAt < TO_DATE(:endDate,'YYYYMMDD') + integer'1'`
           : '1 = 1',
         { endDate: getDBDateStringByDate(endDate) },
       )
